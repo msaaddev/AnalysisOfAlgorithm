@@ -5,6 +5,7 @@ using namespace std;
 
 void RandomArray(int array[], int size);
 int maximumSubArrayBruteForce(int array[]);
+int maximumSubArrayRecursive(int array[]);
 
 int main()
 {
@@ -16,7 +17,7 @@ void RandomArray(int array[], int size)
         array[i] = rand();
 }
 
-int maximumSubArrayBruteForce(int array[], int size)
+int maximumSubArrayBruteForce(int array[], int size, int &low, int &high)
 {
     int maxSum = -99999999;
     for (int i = 0; i < size; i++)
@@ -28,6 +29,8 @@ int maximumSubArrayBruteForce(int array[], int size)
             if (sum > maxSum)
             {
                 maxSum = sum;
+                low = i;
+                high = j;
             }
         }
     }
