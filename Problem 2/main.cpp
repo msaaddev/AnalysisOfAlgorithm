@@ -1,10 +1,10 @@
 #include <iostream>
-#include <ctime>
+#include <chrono>
 #include <random>
 using namespace std;
 
 void RandomArray(int array[], int size);
-int maximumSubArrayBruteForce(int array[]);
+int maximumSubArrayBruteForce(int array[], int size, int &low, int &high);
 int maximumSubArrayRecursive(int array[]);
 
 int main()
@@ -35,4 +35,8 @@ int maximumSubArrayBruteForce(int array[], int size, int &low, int &high)
         }
     }
     return maxSum;
+}
+
+int maximumSubArrayRecursive(int array[], int size, int &low, int &high)
+{
 }
