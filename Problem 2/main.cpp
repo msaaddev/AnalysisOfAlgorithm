@@ -1,12 +1,13 @@
 #include <iostream>
 #include <chrono>
 #include <random>
+#include <iomanip>
 using namespace std;
+using namespace std::chrono;
 
 /*
-A struct to store multiple values which then can be returned from a function at once.
-
- */
+A struct to store multiple values which then can be returned from a function at once
+*/
 
 struct lowsHighsSum
 {
@@ -30,22 +31,45 @@ lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high);
 
 int main()
 {
-    const int size = 1000000;
+
+    int size;
+    cout << "Enter size of the array: ";
+    cin >> size;
+    cout << endl;
+
     lowsHighsSum bruteForceResult, recursiveSum;
     int *array = new int[size];
 
+    srand(NULL);
     randomArray(array, size);
 
+    auto startRecursive = chrono::high_resolution_clock::now();
     recursiveSum = maximumSubArrayRecursive(array, 0, size);
+    auto stopRecursive = chrono::high_resolution_clock::now();
+
     cout << "Maximum SubArray via Recursive Algo: \n"
-         << "Low: " << recursiveSum.low << "\nHigh: " << recursiveSum.high << "\nSum: " << recursiveSum.sum;
+         << "Low: " << recursiveSum.low << "\nHigh: " << recursiveSum.high << "\nSum: " << recursiveSum.sum << endl;
+
+    auto timeTakenByRecursiveAlgo = chrono::duration_cast<microseconds>(stopRecursive - startRecursive);
+    double millisecond = timeTakenByRecursiveAlgo.count() / 1000;
+
+    cout << "Time taken be recursive algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl;
 
     cout << endl;
 
+    auto startBruteForce = chrono::high_resolution_clock::now();
     bruteForceResult = maximumSubArrayBruteForce(array, size);
+    auto stopBruteForce = chrono::high_resolution_clock::now();
 
     cout << "Maximum SubArray via Brute Force Algo: \n"
-         << "Low: " << bruteForceResult.low << "\nHigh: " << bruteForceResult.high << "\nSum: " << bruteForceResult.sum;
+         << "Low: " << bruteForceResult.low << "\nHigh: " << bruteForceResult.high << "\nSum: " << bruteForceResult.sum << endl;
+
+    auto timeTakenByBruteForce = chrono::duration_cast<microseconds>(stopBruteForce - startBruteForce);
+    millisecond = timeTakenByBruteForce.count();
+    cout
+        << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << endl;
+
+    delete array;
 }
 
 /* Function to insert random numbers in the array */
