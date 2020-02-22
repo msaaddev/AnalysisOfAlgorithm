@@ -40,8 +40,8 @@ int main()
     cout << endl;
     int *array = new int[size];
 
-    //declare a struct for storing brute force and recrusive alogirthm results
-    lowsHighsSum bruteForceResult, recursiveSum;
+    //declare a struct for storing brute force, recrusive, hybrid alogirthm results
+    lowsHighsSum bruteForceResult, recursiveSum, hybridSum;
 
     //storing random values in the array
     srand(NULL);
@@ -87,6 +87,26 @@ int main()
     cout << endl;
 
     /*
+        starting the clock then calling the hybrid function and then stopping the clock to get the time taken.
+    */
+
+    auto startHybrid = chrono::high_resolution_clock::now();
+    hybridSum = maxmimmSubArrayHybrid(array, 0, size);
+    auto stopHybrid = chrono::high_resolution_clock::now();
+
+    // Displaying maximum sum of the subarray along with the low and high index values
+    cout << "Maximum SubArray via Hybrid Algo: \n"
+         << "Low: " << hybridSum.low << "\nHigh: " << hybridSum.high << "\nSum: " << hybridSum.sum << endl;
+
+    // Calculating the time taken by the Hybrid algorithm
+    auto timeTakenByHybridAlgo = chrono::duration_cast<microseconds>(stopHybrid - startHybrid);
+    millisecond = timeTakenByHybridAlgo.count() / 1000;
+
+    // Displaying the time
+    cout << "Time taken be Hybrid algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl
+         << endl;
+
+    /*
         starting the clock then calling the recursive function and then stopping the clock to get the time taken.
     */
     auto startBruteForce = chrono::high_resolution_clock::now();
@@ -117,7 +137,8 @@ int main()
         millisecond = timeTakenByBruteForce.count() / 1000;
 
         // Displaying the time
-        cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl;
+        cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl
+             << endl;
     }
 
     // deleteing the array
@@ -131,7 +152,7 @@ void insertRandomValues(int array[], int size)
     std::random_device r;
     std::mt19937 eng(r());
 
-    std::uniform_int_distribution<int> dist(-50, 50);
+    std::uniform_int_distribution<int> dist(-500, 500);
 
     for (int i = 0; i < size; i++)
     {
@@ -247,9 +268,35 @@ lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high)
 
 lowsHighsSum maxmimmSubArrayHybrid(int array[], int low, int high)
 {
-    if ((high - low) > 100)
+    if ((high - low) <= 40)
     {
+        return maximumSubArrayBruteForce(array, low, high);
     }
     else
-        maximumSubArrayBruteForce(array, low, high);
+    {
+        //declaring lowsHighsSum struct variable to store different results
+        lowsHighsSum position1, position2, position3;
+        float mid = (low + high) / 2; //finding the mid of the array
+        mid = floor(mid);             //flooring it in case of point number
+
+        position1 = maxmimmSubArrayHybrid(array, low, mid);      //dividing the left side of array
+        position2 = maxmimmSubArrayHybrid(array, mid + 1, high); //dividing the right side of array
+
+        //calculating the cross sum of the divided arrays
+        position3 = maximumCrossingSubArray(array, low, mid, high);
+
+        //finding maximum cross sum of the array
+        if ((position1.sum >= position2.sum) && (position1.sum >= position3.sum))
+        {
+            return position1;
+        }
+        else if ((position2.sum >= position1.sum) && (position2.sum >= position3.sum))
+        {
+            return position2;
+        }
+        else
+        {
+            return position3;
+        }
+    }
 }
