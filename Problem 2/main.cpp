@@ -48,20 +48,39 @@ int main()
     /*
         starting the clock then calling the recursive function and then stopping the clock to get the time taken.
     */
+
     auto startRecursive = chrono::high_resolution_clock::now();
+
     recursiveSum = maximumSubArrayRecursive(array, 0, size);
     auto stopRecursive = chrono::high_resolution_clock::now();
+    double millisecond;
 
-    // Displaying maximum sum of the subarray along with the low and high index values
-    cout << "Maximum SubArray via Recursive Algo: \n"
-         << "Low: " << recursiveSum.low << "\nHigh: " << recursiveSum.high << "\nSum: " << recursiveSum.sum << endl;
+    if (size == 1)
+    {
+        // Displaying maximum sum of the subarray along with the low and high index values
+        cout << "Maximum SubArray via Recursive Algo: \n"
+             << "Low: " << recursiveSum.low << "\nHigh: " << recursiveSum.high << "\nElement: " << recursiveSum.element << endl;
 
-    // Calculating the time taken by the recursive algorithm
-    auto timeTakenByRecursiveAlgo = chrono::duration_cast<microseconds>(stopRecursive - startRecursive);
-    double millisecond = timeTakenByRecursiveAlgo.count() / 1000;
+        // Calculating the time taken by the recursive algorithm
+        auto timeTakenByRecursiveAlgo = chrono::duration_cast<microseconds>(stopRecursive - startRecursive);
+        millisecond = timeTakenByRecursiveAlgo.count() / 1000;
 
-    // Displaying the time
-    cout << "Time taken be recursive algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl;
+        // Displaying the time
+        cout << "Time taken be recursive algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl;
+    }
+    else
+    {
+        // Displaying maximum sum of the subarray along with the low and high index values
+        cout << "Maximum SubArray via Recursive Algo: \n"
+             << "Low: " << recursiveSum.low << "\nHigh: " << recursiveSum.high << "\nSum: " << recursiveSum.sum << endl;
+
+        // Calculating the time taken by the recursive algorithm
+        auto timeTakenByRecursiveAlgo = chrono::duration_cast<microseconds>(stopRecursive - startRecursive);
+        double millisecond = timeTakenByRecursiveAlgo.count() / 1000;
+
+        // Displaying the time
+        cout << "Time taken be recursive algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl;
+    }
 
     cout << endl;
 
@@ -72,16 +91,32 @@ int main()
     bruteForceResult = maximumSubArrayBruteForce(array, size);
     auto stopBruteForce = chrono::high_resolution_clock::now();
 
-    // Displaying maximum sum of the subarray along with the low and high index values
-    cout << "Maximum SubArray via Brute Force Algo: \n"
-         << "Low: " << bruteForceResult.low << "\nHigh: " << bruteForceResult.high << "\nSum: " << bruteForceResult.sum << endl;
+    if (size == 1)
+    {
+        // Displaying maximum sum of the subarray along with the low and high index values
+        cout << "Maximum SubArray via Brute Force Algo: \n"
+             << "Low: " << bruteForceResult.low << "\nHigh: " << bruteForceResult.high << "\nElement: " << bruteForceResult.element << endl;
 
-    // Calculating the time taken by the brute force algorithm
-    auto timeTakenByBruteForce = chrono::duration_cast<microseconds>(stopBruteForce - startBruteForce);
-    millisecond = timeTakenByBruteForce.count();
+        // Calculating the time taken by the brute force algorithm
+        auto timeTakenByBruteForce = chrono::duration_cast<microseconds>(stopBruteForce - startBruteForce);
+        millisecond = timeTakenByBruteForce.count();
 
-    // Displaying the time
-    cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << endl;
+        // Displaying the time
+        cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << endl;
+    }
+    else
+    {
+        // Displaying maximum sum of the subarray along with the low and high index values
+        cout << "Maximum SubArray via Brute Force Algo: \n"
+             << "Low: " << bruteForceResult.low << "\nHigh: " << bruteForceResult.high << "\nSum: " << bruteForceResult.sum << endl;
+
+        // Calculating the time taken by the brute force algorithm
+        auto timeTakenByBruteForce = chrono::duration_cast<microseconds>(stopBruteForce - startBruteForce);
+        millisecond = timeTakenByBruteForce.count();
+
+        // Displaying the time
+        cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << endl;
+    }
 
     // deleteing the array
     delete[] array;
