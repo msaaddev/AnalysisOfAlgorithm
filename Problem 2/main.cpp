@@ -1,3 +1,13 @@
+/* ==============================================
+
+        Author: Muhammad Saad
+        Section: A
+        Registration Number: 2018-CS-7
+        Programming Language: C++
+        Algorithms: Brute Force, Recursive, Hybrid
+
+=================================================*/
+
 #include <iostream>
 #include <chrono>
 #include <random>
