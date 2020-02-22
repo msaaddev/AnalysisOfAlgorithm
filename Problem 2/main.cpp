@@ -3,6 +3,11 @@
 #include <random>
 using namespace std;
 
+/*
+A struct to store multiple values which then can be returned from a function at once.
+
+ */
+
 struct lowsHighsSum
 {
     int low;
@@ -11,10 +16,17 @@ struct lowsHighsSum
     int element;
 };
 
+/*
+    Prototypes of functions used in the program
+*/
 void randomArray(int array[], int size);
 lowsHighsSum maximumSubArrayBruteForce(int array[], int size);
 lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high);
 lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high);
+
+/*
+    Main Function
+*/
 
 int main()
 {
@@ -36,11 +48,15 @@ int main()
          << "Low: " << bruteForceResult.low << "\nHigh: " << bruteForceResult.high << "\nSum: " << bruteForceResult.sum;
 }
 
+/* Function to insert random numbers in the array */
+
 void randomArray(int array[], int size)
 {
     for (int i = 0; i < size; i++)
         array[i] = rand();
 }
+
+/* Function to calculate maximum sum of the sub array using brute force algorithm */
 
 lowsHighsSum maximumSubArrayBruteForce(int array[], int size)
 {
@@ -63,6 +79,8 @@ lowsHighsSum maximumSubArrayBruteForce(int array[], int size)
     result.sum = maxSum;
     return result;
 }
+
+/* Function which calculates left and right sum of the array from a particular mid point */
 
 lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high)
 {
@@ -94,6 +112,8 @@ lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high)
     position.sum = leftSum + rightSum;
     return position;
 }
+
+/* Function to calculate maximum sum of the sub array using recursive algorithm */
 
 lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high)
 {
