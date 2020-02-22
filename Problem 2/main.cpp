@@ -11,19 +11,20 @@ using namespace std::chrono;
 
 struct lowsHighsSum
 {
-    int low;
-    int high;
-    int sum;
-    int element;
+    int low = 0;
+    int high = 0;
+    int sum = 0;
+    int element = 0;
 };
 
 /*
     Prototypes of functions used in the program
 */
-void randomArray(int array[], int size);
-lowsHighsSum maximumSubArrayBruteForce(int array[], int size);
+void insertRandomValues(int array[], int size);
+lowsHighsSum maximumSubArrayBruteForce(int array[], int low, int high);
 lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high);
 lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high);
+lowsHighsSum maxmimmSubArrayHybrid(int array[], int low, int high);
 
 /*
     Main Function
@@ -31,6 +32,7 @@ lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high);
 
 int main()
 {
+    system("cls");
     // getting the size of the array from user and creating a dynamic array
     int size;
     cout << "Enter size of the array: ";
@@ -43,7 +45,7 @@ int main()
 
     //storing random values in the array
     srand(NULL);
-    randomArray(array, size);
+    insertRandomValues(array, size);
 
     /*
         starting the clock then calling the recursive function and then stopping the clock to get the time taken.
@@ -66,7 +68,7 @@ int main()
         millisecond = timeTakenByRecursiveAlgo.count() / 1000;
 
         // Displaying the time
-        cout << "Time taken be recursive algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl;
+        cout << "Time taken be recursive algorithm: " << fixed << millisecond << setprecision(5) << "  milliseconds" << endl;
     }
     else
     {
@@ -88,7 +90,7 @@ int main()
         starting the clock then calling the recursive function and then stopping the clock to get the time taken.
     */
     auto startBruteForce = chrono::high_resolution_clock::now();
-    bruteForceResult = maximumSubArrayBruteForce(array, size);
+    bruteForceResult = maximumSubArrayBruteForce(array, 0, size);
     auto stopBruteForce = chrono::high_resolution_clock::now();
 
     if (size == 1)
@@ -99,10 +101,10 @@ int main()
 
         // Calculating the time taken by the brute force algorithm
         auto timeTakenByBruteForce = chrono::duration_cast<microseconds>(stopBruteForce - startBruteForce);
-        millisecond = timeTakenByBruteForce.count();
+        millisecond = timeTakenByBruteForce.count() / 1000;
 
         // Displaying the time
-        cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << endl;
+        cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl;
     }
     else
     {
@@ -112,10 +114,10 @@ int main()
 
         // Calculating the time taken by the brute force algorithm
         auto timeTakenByBruteForce = chrono::duration_cast<microseconds>(stopBruteForce - startBruteForce);
-        millisecond = timeTakenByBruteForce.count();
+        millisecond = timeTakenByBruteForce.count() / 1000;
 
         // Displaying the time
-        cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << endl;
+        cout << "Time taken be brute force algorithm: " << fixed << millisecond << setprecision(5) << " milliseconds" << endl;
     }
 
     // deleteing the array
@@ -124,17 +126,25 @@ int main()
 
 /* Function to insert random numbers in the array */
 
-void randomArray(int array[], int size)
+void insertRandomValues(int array[], int size)
 {
+    std::random_device r;
+    std::mt19937 eng(r());
+
+    std::uniform_int_distribution<int> dist(-50, 50);
+
     for (int i = 0; i < size; i++)
-        array[i] = rand();
+    {
+        array[i] = dist(eng);
+    }
 }
 
 /* Function to calculate maximum sum of the sub array using brute force algorithm */
 
-lowsHighsSum maximumSubArrayBruteForce(int array[], int size)
+lowsHighsSum maximumSubArrayBruteForce(int array[], int low, int high)
 {
     lowsHighsSum result; //declaring the lowsHighsSum struct variable to store result
+    int size = high - low;
     int maxSum = -99999999;
 
     // finding the maximum sum and the indexes at which it lies
@@ -166,7 +176,7 @@ lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high)
     int sum = 0;
 
     //calculating the sum of the left side of the array
-    for (int i = mid; i >= low; i--)
+    for (int i = mid; i > low; i--)
     {
         sum = sum + array[i];
         if (sum > leftSum)
@@ -233,4 +243,13 @@ lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high)
             return position3;
         }
     }
+}
+
+lowsHighsSum maxmimmSubArrayHybrid(int array[], int low, int high)
+{
+    if ((high - low) > 100)
+    {
+    }
+    else
+        maximumSubArrayBruteForce(array, low, high);
 }
