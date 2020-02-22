@@ -11,39 +11,56 @@ struct lowsHighsSum
     int element;
 };
 
-void RandomArray(int array[], int size);
-lowsHighsSum maximumSubArrayBruteForce(int array[], int size, int &low, int &high);
+void randomArray(int array[], int size);
+lowsHighsSum maximumSubArrayBruteForce(int array[], int size);
 lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high);
 lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high);
 
 int main()
 {
+    const int size = 1000000;
+    lowsHighsSum bruteForceResult, recursiveSum;
+    int *array = new int[size];
+
+    randomArray(array, size);
+
+    recursiveSum = maximumSubArrayRecursive(array, 0, size);
+    cout << "Maximum SubArray via Recursive Algo: \n"
+         << "Low: " << recursiveSum.low << "\nHigh: " << recursiveSum.high << "\nSum: " << recursiveSum.sum;
+
+    cout << endl;
+
+    bruteForceResult = maximumSubArrayBruteForce(array, size);
+
+    cout << "Maximum SubArray via Brute Force Algo: \n"
+         << "Low: " << bruteForceResult.low << "\nHigh: " << bruteForceResult.high << "\nSum: " << bruteForceResult.sum;
 }
 
-void RandomArray(int array[], int size)
+void randomArray(int array[], int size)
 {
     for (int i = 0; i < size; i++)
         array[i] = rand();
 }
 
-lowsHighsSum maximumSubArrayBruteForce(int array[], int size, int &low, int &high)
+lowsHighsSum maximumSubArrayBruteForce(int array[], int size)
 {
     lowsHighsSum result;
     int maxSum = -99999999;
     for (int i = 0; i < size; i++)
     {
         int sum = 0;
-        for (int j = 0; j < size; j++)
+        for (int j = i; j < size; j++)
         {
             sum = sum + array[j];
             if (sum > maxSum)
             {
-                result.sum = sum;
+                maxSum = sum;
                 result.low = i;
                 result.high = j;
             }
         }
     }
+    result.sum = maxSum;
     return result;
 }
 
@@ -64,7 +81,7 @@ lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high)
 
     int rightSum = -99999999;
     sum = 0;
-    for (int i = mid + 1; i <= high; i++)
+    for (int i = mid + 1; i < high; i++)
     {
         sum = sum + array[i];
         if (sum > rightSum)
