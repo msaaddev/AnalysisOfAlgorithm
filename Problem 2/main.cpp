@@ -3,7 +3,7 @@
 #include <random>
 using namespace std;
 
-struct recursiveLowsHighs
+struct lowsHighsSum
 {
     int low;
     int high;
@@ -12,9 +12,9 @@ struct recursiveLowsHighs
 };
 
 void RandomArray(int array[], int size);
-int maximumSubArrayBruteForce(int array[], int size, int &low, int &high);
-recursiveLowsHighs maximumCrossingSubArray(int array[], int low, int mid, int high);
-recursiveLowsHighs maximumSubArrayRecursive(int array[], int low, int high);
+lowsHighsSum maximumSubArrayBruteForce(int array[], int size, int &low, int &high);
+lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high);
+lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high);
 
 int main()
 {
@@ -26,8 +26,9 @@ void RandomArray(int array[], int size)
         array[i] = rand();
 }
 
-int maximumSubArrayBruteForce(int array[], int size, int &low, int &high)
+lowsHighsSum maximumSubArrayBruteForce(int array[], int size, int &low, int &high)
 {
+    lowsHighsSum result;
     int maxSum = -99999999;
     for (int i = 0; i < size; i++)
     {
@@ -37,18 +38,18 @@ int maximumSubArrayBruteForce(int array[], int size, int &low, int &high)
             sum = sum + array[j];
             if (sum > maxSum)
             {
-                maxSum = sum;
-                low = i;
-                high = j;
+                result.sum = sum;
+                result.low = i;
+                result.high = j;
             }
         }
     }
-    return maxSum;
+    return result;
 }
 
-recursiveLowsHighs maximumCrossingSubArray(int array[], int low, int mid, int high)
+lowsHighsSum maximumCrossingSubArray(int array[], int low, int mid, int high)
 {
-    recursiveLowsHighs position;
+    lowsHighsSum position;
     int leftSum = -999999999;
     int sum = 0;
     for (int i = mid; i >= low; i--)
@@ -77,9 +78,9 @@ recursiveLowsHighs maximumCrossingSubArray(int array[], int low, int mid, int hi
     return position;
 }
 
-recursiveLowsHighs maximumSubArrayRecursive(int array[], int low, int high)
+lowsHighsSum maximumSubArrayRecursive(int array[], int low, int high)
 {
-    recursiveLowsHighs position1, position2, position3, result;
+    lowsHighsSum position1, position2, position3, result;
 
     if (high == low)
     {
