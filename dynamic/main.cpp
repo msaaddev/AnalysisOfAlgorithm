@@ -8,6 +8,15 @@ int main()
 }
 
 /*
+    Max function
+*/
+int max(int a, int b)
+{
+    if (a > b)
+        return a;
+    return b;
+}
+/*
     Cut Rod Recursive Approach
 */
 int cutRod(int n, int p[])
