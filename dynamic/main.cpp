@@ -21,14 +21,12 @@ int max(int a, int b)
 */
 int cutRod(int n, int p[])
 {
+    recursiveCount++;
+    int q = -999999999;
     if (n == 0)
         return 0;
-    int q = -999999999;
     for (int i = 0; i < n; i++)
-    {
-        if (q < (p[i] + cutRod(n - i, p)))
-            q = p[i] + cutRod(n - i, p);
-    }
+        q = max(q, (p[i] + cutRod(n - i - 1, p)));
     return q;
 }
 
@@ -39,24 +37,25 @@ int memoizedCutRod(int p[], int n)
 {
 
     int *r = new int[n];
-    for (int i = 0; i < n; i++)
+    for (int i = 0; i < n + 1; i++)
         r[i] = -999999999;
     return memoizedCutRodAux(p, n, r);
 }
 
 int memoizedCutRodAux(int p[], int n, int r[])
 {
+    dynamicCount++;
     int q = -999999999;
 
     if (r[n] >= 0)
         return r[n];
     if (n == 0)
         q = 0;
+
     else if (q = -999999999)
         for (int i = 0; i < n; i++)
-        {
-            if (q < (p[i] + memoizedCutRodAux(p, n - i, r)))
-                q = p[i] + memoizedCutRodAux(p, n - i, r);
-        }
+            q = max(q, (p[i] + memoizedCutRodAux(p, n - i - 1, r)));
+
+    r[n] = q;
     return q;
 }
