@@ -1,10 +1,31 @@
 #include <iostream>
 using namespace std;
 
-int count = 0;
+int recursiveCount = 0;
+int dynamicCount = 0;
+int max(int a, int b);
 int cutRod(int n, int p[]);
+int memoizedCutRod(int p[], int n);
+int memoizedCutRodAux(int p[], int n, int r[]);
+
 int main()
 {
+    // variable declaration
+    int p[10] = {1, 5, 8, 9, 10, 17, 17, 20, 24, 30};
+    int num;
+
+    // value for the length of rod
+    cout << "What length of rod do you need. Enter from 1 to 10: ";
+    cin >> num;
+
+    // recursive function called
+    cout << "Recursive" << endl;
+    cout << "Price of " << num << " pieces should be: " << cutRod(num, p) << endl;
+    cout << "Number of times recursive cut rod function called: " << recursiveCount;
+
+    cout << "\n\nDynamic Function" << endl;
+    cout << "Price of " << num << " pieces should be: " << memoizedCutRod(p, num) << endl;
+    cout << "Number of times dynamic cut rod function called: " << dynamicCount;
 }
 
 /*
