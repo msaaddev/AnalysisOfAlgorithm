@@ -8,7 +8,7 @@ int main()
 }
 
 /*
-    Cut Rod recurssive function
+    Cut Rod Recursive Approach
 */
 int cutRod(int n, int p[])
 {
@@ -17,6 +17,12 @@ int cutRod(int n, int p[])
     int q = -999999999;
     for (int i = 0; i < n; i++)
     {
+        if (q < (p[i] + cutRod(n - i, p)))
+            q = p[i] + cutRod(n - i, p);
+    }
+    return q;
+}
+
 /*
     Cut Rod Dynamic Approach
 */
