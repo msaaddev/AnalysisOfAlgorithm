@@ -19,7 +19,7 @@ int main()
     cin >> num;
 
     // recursive function called
-    cout << "Recursive" << endl;
+    cout << "\nRecursive" << endl;
     cout << "Price of " << num << " pieces should be: " << cutRod(num, p) << endl;
     cout << "Number of times recursive cut rod function called: " << recursiveCount;
 
@@ -57,7 +57,7 @@ int cutRod(int n, int p[])
 int memoizedCutRod(int p[], int n)
 {
 
-    int *r = new int[n];
+    int *r = new int[n + 1];
     for (int i = 0; i < n + 1; i++)
         r[i] = -999999999;
     return memoizedCutRodAux(p, n, r);
@@ -76,7 +76,6 @@ int memoizedCutRodAux(int p[], int n, int r[])
     else if (q = -999999999)
         for (int i = 0; i < n; i++)
             q = max(q, (p[i] + memoizedCutRodAux(p, n - i - 1, r)));
-
     r[n] = q;
     return q;
 }
