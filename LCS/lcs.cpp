@@ -33,7 +33,7 @@ int main()
 	int i = str1.length();
 	int j = str2.length();
 	r = lcsLength(str1, str2);
-	printLCS(r.ptrOfFirstArr, str1, i, j);
+	printLCS(r.ptrOfFirstArr, str1, i - 1, j - 1);
 }
 
 result lcsLength(string x, string y)
@@ -62,7 +62,6 @@ result lcsLength(string x, string y)
 			{
 				secondArr[i][j] = secondArr[i - 1][j - 1] + 1;
 				firstArr[i - 1][j - 1] = 'd';
-				cout << secondArr[i][j];
 			}
 			else if (secondArr[i - 1][j] >= secondArr[i][j - 1])
 			{
@@ -85,7 +84,7 @@ result lcsLength(string x, string y)
 
 void printLCS(char **b, string x, int i, int j)
 {
-	if (i == 0 || j == 0)
+	if (i == -1 || j == -1)
 		return;
 	if (b[i][j] == 'd')
 	{
