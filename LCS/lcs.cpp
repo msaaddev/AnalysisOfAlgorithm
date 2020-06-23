@@ -16,7 +16,7 @@ using namespace std;
 struct result
 {
 	char **ptrOfFirstArr;
-	char **ptrOfSecondArr;
+	int **ptrOfSecondArr;
 };
 
 result lcsLength(string x, string y);
@@ -42,32 +42,40 @@ result lcsLength(string x, string y)
 	int lenOfY = y.length();
 
 	char **firstArr = new char *[lenOfX];
-	for (int i = 0; i < lenOfX; i++)
+	for (int i = 0; i < lenOfX; ++i)
 		firstArr[i] = new char[lenOfY];
 
-	char **secondArr = new char *[lenOfX + 1];
+	int **secondArr = new int *[lenOfX + 1];
 	for (int i = 0; i < lenOfX + 1; i++)
-		secondArr[i] = new char[lenOfY + 1];
+		secondArr[i] = new int[lenOfY + 1];
 
 	for (int i = 0; i <= lenOfX; i++)
 		secondArr[i][0] = 0;
-	for (int i = 0; i <= lenOfY; i++)
+	for (int i = 0; i <= lenOfY + 1; i++)
 		secondArr[0][i] = 0;
 
-	for (int i = 0; i < lenOfX; i++)
-		for (int j = 0; j < lenOfY; j++)
-			if (firstArr[i] == secondArr[j])
+	for (int i = 1; i <= lenOfX; i++)
+	{
+		for (int j = 1; j <= lenOfY; j++)
+		{
+			if (x[i - 1] == y[j - 1])
 			{
 				secondArr[i][j] = secondArr[i - 1][j - 1] + 1;
 				firstArr[i - 1][j - 1] = 'd';
+				cout << secondArr[i][j];
 			}
 			else if (secondArr[i - 1][j] >= secondArr[i][j - 1])
 			{
 				secondArr[i][j] = secondArr[i - 1][j];
-				firstArr[i][j - 1] = 't';
+				firstArr[i - 1][j - 1] = 't';
 			}
-			else if (secondArr[i][j] == secondArr[i][j - 1])
-				firstArr[i - 1][j] = 'l';
+			else
+			{
+				secondArr[i][j] = secondArr[i][j - 1];
+				firstArr[i - 1][j - 1] = 'l';
+			}
+		}
+	}
 
 	result r;
 	r.ptrOfFirstArr = firstArr;
