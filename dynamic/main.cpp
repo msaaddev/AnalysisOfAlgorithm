@@ -1,6 +1,9 @@
 #include <iostream>
 using namespace std;
 
+/*
+    Function declarations
+*/
 int recursiveCount = 0;
 int dynamicCount = 0;
 int max(int a, int b);
@@ -72,8 +75,7 @@ int memoizedCutRodAux(int p[], int n, int r[])
         return r[n];
     if (n == 0)
         q = 0;
-
-    else if (q = -999999999)
+    else
         for (int i = 0; i < n; i++)
             q = max(q, (p[i] + memoizedCutRodAux(p, n - i - 1, r)));
     r[n] = q;
