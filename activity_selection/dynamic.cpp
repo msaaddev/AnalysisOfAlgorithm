@@ -22,7 +22,7 @@ int main()
 {
 	/* variable declarations */
 	int numOfActivities;
-	cout << "Enter total number of activities: ";
+	cout << "\nEnter total number of activities: ";
 	cin >> numOfActivities;
 	int *s = new int[numOfActivities];
 	int *f = new int[numOfActivities];
@@ -74,12 +74,12 @@ void dynamicActivitySelector(int s[], int f[], int n)
 	/* calculating scheduled activities */
 	for (int l = 2; l < n + 1; l++)
 	{
-		for (int i = 0; i < n - l + 2; i++)
+		for (int i = 0; i < n - l + 1; i++)
 		{
 			j = i + l;
 			c[i][j] = 0;
 			k = j - 1;
-			while (f[i] < f[j])
+			while (f[i] < f[k])
 			{
 				if ((f[i] <= s[k]) && (f[k] <= s[j]) && (c[i][k] + c[k][j] + 1 > c[i][j]))
 				{
@@ -90,8 +90,8 @@ void dynamicActivitySelector(int s[], int f[], int n)
 			}
 		}
 	}
-	cout << "A maximum size set of mutually compatible activities has size: " << c[0][n + 1];
-	cout << "The set contains ";
+	cout << "\nA maximum size set of mutually compatible activities has size: " << c[0][n + 1];
+	cout << "\nThe set contains ";
 
 	printActivities(c, act, 0, n + 1);
 }
