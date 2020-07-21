@@ -99,19 +99,62 @@ void readData(int &numOfVertices, int &isDirected, char vertices[], int &numOfEd
 	read >> numOfEdges;
 
 	// extracting and assigning edges to approprate vertices
-	for (int i = 0; i < numOfEdges; i++)
+	if (isDirected)
 	{
-		char checkEdge;
-		read >> checkEdge;
 
-		for (int j = 0; j < numOfVertices; j++)
-			if (edges[j][0] == checkEdge)
+		for (int i = 0; i < numOfEdges; i++)
+		{
+			bool check = true;
+			char firstEdge, nextEdge;
+			read >> firstEdge;
+			read >> nextEdge;
+
+			for (int j = 0; j < numOfVertices; j++)
 			{
-				int counter = 1;
-				while (edges[j][counter] != '/')
-					counter++;
-				read >> edges[j][counter];
+				if (edges[j][0] == nextEdge)
+				{
+					int counter = 0;
+					while (edges[j][counter] != '/')
+					{
+						if (edges[j][counter] == firstEdge)
+						{
+							check = false;
+							break;
+						}
+						counter++;
+					}
+				}
 			}
+
+			if (check)
+			{
+				for (int j = 0; j < numOfVertices; j++)
+					if (edges[j][0] == firstEdge)
+					{
+						int counter = 1;
+						while (edges[j][counter] != '/')
+							counter++;
+						edges[j][counter] = nextEdge;
+					}
+			}
+		}
+	}
+	else
+	{
+		for (int i = 0; i < numOfEdges; i++)
+		{
+			char checkEdge;
+			read >> checkEdge;
+
+			for (int j = 0; j < numOfVertices; j++)
+				if (edges[j][0] == checkEdge)
+				{
+					int counter = 1;
+					while (edges[j][counter] != '/')
+						counter++;
+					read >> edges[j][counter];
+				}
+		}
 	}
 
 	read.close();
